@@ -1,0 +1,36 @@
+schema: spec-driven
+
+# Project context (optional)
+# Add only constraints that should guide OpenSpec artifacts and workflows.
+# Include constraints an agent cannot infer by reading the code.
+# Keep general project documentation and discoverable codebase facts out.
+context: |
+  Write all artifacts in English.
+  Spring Boot template using a feature-based layered architecture.
+  Read AGENTS.md and README.md before proposing or implementing.
+
+  This repository is a template that other projects will derive from. It has
+  little functionality today, but design every change as if the codebase were
+  already large: clean, scalable, and following good practices. Do not
+  simplify just because there are few features now; the examples set the
+  pattern that derived projects will copy and grow.
+  Do not add speculative abstractions either: introduce an interface or
+  separate model only when it solves a concrete need (see AGENTS.md).
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  specs:
+    - A delta spec that creates a new capability must start with a "## Purpose" section (one or two sentences on what the capability is for), before "## ADDED Requirements".
+  tasks:
+    - Keep tasks small. Implement all tasks of a change in one apply run, then pause for review; do not pause between task sections. Each planned stage is a separate change; move to the next one only on the user's instruction.
+    - Include a verification task using ./mvnw verify.
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+operations:
+  apply:
+    guidance:
+      - After all tasks are complete, decide whether the architecture-reviewer agent applies, following the criteria in its description (structural or layer changes, error handling or configuration, new dependencies or abstractions; skip it for imports, formatting, comments, documentation, or isolated test edits). If it applies, run it before finishing.
+      - Mention the architecture review to the user only when it reports violations or suggestions; if it reports no findings, say nothing about it.
